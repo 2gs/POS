@@ -41,52 +41,6 @@ namespace POS
 
         }
 
-        public static void removeFromList(int want, List<Product> AddToCart, List<Product> ProductList)
-        {
-            for (int i = 0; AddToCart.Count < i; i++)
-            {
-                AddToCart.Add(ProductList[want - 1]);
-            }
-            // return AddToCart;
-        }
-        public static void AddToCart(int want, List<Product> AddToCart, List<Product> ProductList)
-        {
-            string choice;
-            bool going = true;
-            for (int i = 0; AddToCart.Count < i; i++)
-            {
-                AddToCart.Add(ProductList[want - 1]);
-            }
-            //Display items left
-            //   ItemsLeft(ProductList);
-
-            //   AddtoCart.Add(ProductList[want]);
-            // ProductList.RemoveAt(want);
-            Console.WriteLine("\n");
-            Console.WriteLine("Do you want to Add another item?");
-            choice = Console.ReadLine();
-            if (choice == "y")
-            {
-                going = true;
-            }
-            else if (choice == "n")
-            {
-                going = false;
-            }
-        }
-
-
-        public static void ItemsLeft(List<Product> ProductList)
-        {
-            Console.WriteLine("Items left on the cart");
-            Console.WriteLine("=======================");
-
-            for (int i = 0; i < ProductList.Count; i++)
-            {
-                Console.WriteLine(ProductList[i]);
-            }
-            Console.WriteLine("=======================");
-        }
         static void Main(string[] args)
         {
 
@@ -111,49 +65,86 @@ namespace POS
                         break;
                     case 2:
                         int want = 0;
-                          double  quantity= 0;
-                        double price,total = 0;
-                        string choice;
-                        bool going = true;
+                        double quantity = 0;
+                        double price = 0;
 
+
+                        bool going = true;
+                        #region Display cart
                         Console.WriteLine("Add to cart");
                         Console.WriteLine("==================");
                         Console.WriteLine("==================");
                         Console.WriteLine("\n");
 
                         List<Product> ProductList = PrintList();                    //put list in array list and display product list
-                        List<Product> AddtoCart = new List<Product>();      //New List to add their items to 
-                        //List<Product> Receipt = new List<Product>();
-                        
+
+                        Console.WriteLine("=========================");
+                        #endregion
+
+                        //New List to add their items to 
+                        //holds name of items being added to the receipt
+                        //holds totals of items being added to the receipt
+                        List<Product> AddtoCart = new List<Product>();
+                        List<string> Name = new List<string>();
+                        List<Double> Total = new List<Double>();
+
+                        #region Handles add to cart functionality
                         do
                         {
-                            List<Receipt> str = new List<Receipt>();
+
+                            double bft, aft, gt, stx;
+                            bft = 0;
+                            aft = 0;
+                            gt = 0;
+                            stx = .06;
+
                             Console.WriteLine("\n");
-                            Console.WriteLine("What do you want?" + "If you wnt the 1st item select 1 etc....");
+                            Console.WriteLine("What do you want?" + " " + "If you want the 1st item select 1 etc....");
                             want = int.Parse(Console.ReadLine());
                             Console.WriteLine("How many do you want?");
                             quantity = double.Parse(Console.ReadLine());
-                            
+                            Console.WriteLine("\n");
+
                             string name;
-                         
 
-                            //List<Receipt> str = new List<Receipt>();
-                            //str.Add(new Receipt(ProductList[1 - want].Name, ProductList[1 - want].Price,quantity,total));
+                            double total = 0;
 
-                          //  Console.WriteLine(name + " " + "quantity:" + quantity + " "  + "Total:" + total);
-                            //Add to Cart
-                            AddtoCart.Add(new Product(ProductList[want-1].Name, ProductList[want-1].Price, ProductList[want-1].Quantity, ProductList[want-1].Total));
+                            //get name of product user selected
+                            //gets price of product that the user selected
+                            //stores subtotal for item
                             name = ProductList[want - 1].Name;
                             price = ProductList[want - 1].Price;
                             total = price * quantity;
 
-                            str.Add(new Receipt(name, price, quantity, total));
-                                //(new Receipt(ProductList[want-1].Name, ProductList[want-1].Price, quantity, total));
 
+                            //Adds the item total to arraylist so I can user later to find the before tax amount
+                            Total.Add(quantity * price);
 
-                            ProductList.RemoveAt(want-1);                         //remove item from list
+                            //Adds up all totals to get the before tax amount
+                            for (int i = 0; i < Total.Count; i++)
+                            {
+                                bft += Total[i];
+                            }
 
-                            //Display list you removing from
+                            //after tax amount
+                            //grand total amount
+
+                            aft = bft * stx;
+                            gt = bft + aft;
+
+                            //Add to Cart
+                            AddtoCart.Add(new Product(ProductList[want - 1].Name, ProductList[want - 1].Price, ProductList[want - 1].Quantity, ProductList[want - 1].Total));
+
+                            //Adds each item to Name ArrayList which is used as a receipt and will be displayed later
+                            Name.Add("Item: " + name);
+                            Name.Add("price: " + price.ToString("n2"));
+                            Name.Add("qty: " + quantity.ToString());
+                            Name.Add("total: " + total.ToString("n2"));
+
+                            //Remove item selected by user
+                            ProductList.RemoveAt(want - 1);
+
+                            //Display list user is removing from removing from
                             Console.WriteLine("List you are removing from");
                             Console.WriteLine("++++++++++++++++++++++++++++");
                             for (int i = 0; i < ProductList.Count; i++)
@@ -161,10 +152,26 @@ namespace POS
                                 Console.WriteLine(ProductList[i]);
                             }
                             Console.WriteLine("++++++++++++++++++++++++++++");
+                            string choice = "";
 
+                            bool control = true;
+                            #region Do while loop to control question validation
+                            do
+                            {
+                                Console.WriteLine("Do you want to Add another item?");
+                                choice = Console.ReadLine();
+                                Console.WriteLine("\n");
+                                if (choice == "y" || choice == "n")
+                                {
+                                    control = false;
+                                }
+                                else if (choice != "y" || choice != "n")
+                                {
 
-                            Console.WriteLine("Do you want to Add another item?");
-                            choice = Console.ReadLine();
+                                    control = true;
+                                }
+                            } while (control);
+                            #endregion
                             if (choice == "y" && ProductList.Count < 0)
                             {
 
@@ -173,6 +180,8 @@ namespace POS
 
                                 Console.WriteLine("The is the add cart list....");
                                 Console.WriteLine();
+
+                                //AddToCart ==> list that displays what user added to cart
                                 for (int i = 0; i < AddtoCart.Count; i++)
                                 {
                                     Console.WriteLine(AddtoCart[i]);
@@ -187,48 +196,84 @@ namespace POS
                             }
                             else if (choice == "n")
                             {
+
+                                //AddToCart ==> list that displays what user added to cart
+
                                 Console.WriteLine("The is the add cart list....");
+                                Console.WriteLine("++++++++++++++++++++++++++++");
                                 Console.WriteLine();
+
                                 for (int i = 0; i < AddtoCart.Count; i++)
                                 {
                                     Console.WriteLine(AddtoCart[i]);
                                 }
                                 Console.WriteLine("++++++++++++++++++++++++++++");
+                                Console.WriteLine("\n");
 
+                                #region Display total, grand total, sales tax, before tax, after tax
+                                Console.WriteLine("++++++++++++++++++++++++++++");
+                                Console.WriteLine("Total before tax:" + " " + bft.ToString("n2"));
+                                Console.WriteLine("Sales Tax:" + " " + stx);
+                                Console.WriteLine("=========================");
+                                Console.WriteLine("Total after tax:" + " " + aft);
+                                Console.WriteLine("Grand total:" + " " + gt.ToString("n2"));
+                                Console.WriteLine("++++++++++++++++++++++++++++");
+                                Console.WriteLine("\n");
+                                #endregion
+
+                                #region Payment
+                                string payment = "";
+                                Console.WriteLine("How would you like to pay?");
+                                payment = Console.ReadLine();
+
+
+                                if (payment == "check")
+                                {
+                                    Check c = new Check();
+                                    c.payment(gt);
+                                }
+                                else if (payment == "cash")
+                                {
+                                    Cash cash = new Cash();
+                                    cash.payment(gt);
+                                }
+                                else if (payment == "credit card")
+                                {
+                                    CreditCard cc = new CreditCard();
+                                    cc.payment(gt);
+                                }
+                                #endregion
+
+                                Console.WriteLine("\n");
+
+                                #region Receipt
+                                Console.WriteLine("++++++++++++++++++++++++++++");
                                 Console.WriteLine("Here is your receipt");
                                 Console.WriteLine("++++++++++++++++++++++++++++");
-                                for (int i = 0; i < str.Count; i++)
+
+                                for (int i = 0; i < Name.Count; i++)
                                 {
-                                    Console.WriteLine(str[i].Name + " " + str[i].Price + "" + str[i].Quantity + " "  + str[i].Total);
+                                    Console.Write(Name[i] + " ");
+                                    Console.WriteLine("\n");
+
                                 }
+
+
                                 Console.WriteLine("++++++++++++++++++++++++++++");
+                                Console.WriteLine("Total before tax:" + " " + bft.ToString("n2"));
+                                Console.WriteLine("Sales Tax:" + " " + stx);
+                                Console.WriteLine("=========================");
+                                Console.WriteLine("Total after tax:" + " " + aft);
+                                Console.WriteLine("Grand total:" + " " + gt.ToString("n2"));
+                                Console.WriteLine("++++++++++++++++++++++++++++");
+                                #endregion
+
                                 going = false;
 
-                                
+
                             }
                         } while (going);
-
-                        
-                        /*
-                        #region Payment
-                        string payment = "";
-                        Console.WriteLine("How would you like to pay?");
-                        payment = Console.ReadLine();
-
-                        if(payment == "check")
-                        {
-
-                        }
-                        else if(payment == "cash")
-                        {
-
-                        }
-                        else if (payment == "check")
-                        {
-
-                        }
-#endregion
-*/
+                        #endregion
                         break;
                     case 3:
                         Console.WriteLine("exit");
@@ -239,7 +284,11 @@ namespace POS
                         break;
                 }
 
+
             }
+
         }
+
     }
+
 }

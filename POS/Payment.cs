@@ -8,6 +8,6 @@ namespace POS
 {
     abstract class Payment
     {
-        public abstract double payment();
+        public abstract void payment(double gt);
     }
 }

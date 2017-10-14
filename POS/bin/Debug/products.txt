@@ -1,0 +1,11 @@
+Beverage,Faygo Rock & Rye,2 liter,2.00
+Beverage,Lipton Black Tea,1000 count,2.00
+Beverage,Starbucks Columbian,12oz,7.00
+Dairy,Eggland's Best Eggs,1 dozen,3.00
+Dairy,Silk Almond Milk,1 qt carton,2.00
+Dairy,Kraft Singles Cheese,32 count,5.00
+Dry Goods,WonderBread White,20oz,6.00
+Dry Goods,Uncle Ben's Long grain rice,32oz,4.00
+Dry Goods,Barilla BowTie Pasta,16oz,3.00
+Meat,Tyson Chicken Breast,1lb,4.00
+Meat,Omaha Filet Mignon,1lb,38.00

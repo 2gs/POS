@@ -1,0 +1,7 @@
+c:\users\ernes\source\repos\POS\POS\bin\Debug\POS.exe.config
+c:\users\ernes\source\repos\POS\POS\bin\Debug\POS.exe
+c:\users\ernes\source\repos\POS\POS\bin\Debug\POS.pdb
+c:\users\ernes\source\repos\POS\POS\obj\Debug\POS.csprojResolveAssemblyReference.cache
+c:\users\ernes\source\repos\POS\POS\obj\Debug\POS.csproj.CoreCompileInputs.cache
+c:\users\ernes\source\repos\POS\POS\obj\Debug\POS.exe
+c:\users\ernes\source\repos\POS\POS\obj\Debug\POS.pdb

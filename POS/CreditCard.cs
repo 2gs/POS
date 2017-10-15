@@ -11,12 +11,25 @@ namespace POS
 
         public override void payment(double gt)
         {
-            double ccnum;
+            string ccnum;
+            ccnum = "";
             double ccv;
             double exp;
+            bool going;
+            going = true;
+            do
+            {
+                Console.WriteLine("What is you credit card number?");
+                ccnum = Console.ReadLine();
 
-            Console.WriteLine("What is you credit card number?");
-            ccnum = double.Parse(Console.ReadLine());
+                if (ccnum.Length > 16)
+                {
+                    Console.WriteLine("Invalid Credit Card #..Try again");
+                }
+            } while (going);
+            
+
+           
 
             Console.WriteLine("What is your CCV? 3 digit code on the back of your card");
             ccv = double.Parse(Console.ReadLine());
@@ -25,7 +38,7 @@ namespace POS
             Console.WriteLine("You card is being charged...");
             Console.WriteLine("You were charged" + gt.ToString("n2") + " to your credit card");
 
-            // return ccnum;
+  
 
         }
     }

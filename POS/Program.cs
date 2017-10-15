@@ -81,22 +81,22 @@ namespace POS
                         Console.WriteLine("=========================");
                         #endregion
 
-                        //New List to add their items to 
-                        //holds name of items being added to the receipt
-                        //holds totals of items being added to the receipt
-                        List<Product> AddtoCart = new List<Product>();
-                        List<string> Name = new List<string>();
-                        List<Double> Total = new List<Double>();
+                        List<Product> AddtoCart = new List<Product>();                        //New List to add their items to 
+                        List<string> Name = new List<string>();                              //holds name of items being added to the receipt
+                        List<Double> Total = new List<Double>();                           //holds totals of items being added to the receipt
 
                         #region Handles add to cart functionality
                         do
                         {
-
-                            double bft, aft, gt, stx;
+                            #region Variables to hold before tax, after tax, grand total, & sales tax amount
+                            double bft, aft, gt, stx;       
                             bft = 0;
                             aft = 0;
                             gt = 0;
                             stx = .06;
+                            #endregion
+
+                            #region What does the user want
 
                             Console.WriteLine("\n");
                             Console.WriteLine("What do you want?" + " " + "If you want the 1st item select 1 etc....");
@@ -106,19 +106,15 @@ namespace POS
                             Console.WriteLine("\n");
 
                             string name;
-
                             double total = 0;
-
-                            //get name of product user selected
-                            //gets price of product that the user selected
-                            //stores subtotal for item
-                            name = ProductList[want - 1].Name;
-                            price = ProductList[want - 1].Price;
-                            total = price * quantity;
+                            
+                            name = ProductList[want - 1].Name;  //get name of product user selected
+                            price = ProductList[want - 1].Price;     //gets price of product that the user selected
+                            total = price * quantity;       //stores subtotal for item
 
 
-                            //Adds the item total to arraylist so I can user later to find the before tax amount
-                            Total.Add(quantity * price);
+                           
+                            Total.Add(quantity * price);     //Adds the item total to arraylist so I can use it later to find the before tax amount
 
                             //Adds up all totals to get the before tax amount
                             for (int i = 0; i < Total.Count; i++)
@@ -126,13 +122,10 @@ namespace POS
                                 bft += Total[i];
                             }
 
-                            //after tax amount
-                            //grand total amount
+                            aft = bft * stx;     //after tax amount
+                            gt = bft + aft;             //grand total amount
 
-                            aft = bft * stx;
-                            gt = bft + aft;
-
-                            //Add to Cart
+                            //Add to Cart list which displays what the user added to their cart
                             AddtoCart.Add(new Product(ProductList[want - 1].Name, ProductList[want - 1].Price, ProductList[want - 1].Quantity, ProductList[want - 1].Total));
 
                             //Adds each item to Name ArrayList which is used as a receipt and will be displayed later
@@ -141,10 +134,10 @@ namespace POS
                             Name.Add("qty: " + quantity.ToString());
                             Name.Add("total: " + total.ToString("n2"));
 
-                            //Remove item selected by user
+                            //Remove item from list selected by user
                             ProductList.RemoveAt(want - 1);
 
-                            //Display list user is removing from removing from
+                            //Display list that the user is removing from removing from
                             Console.WriteLine("List you are removing from");
                             Console.WriteLine("++++++++++++++++++++++++++++");
                             for (int i = 0; i < ProductList.Count; i++)

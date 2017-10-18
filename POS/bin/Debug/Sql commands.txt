@@ -1,0 +1,10 @@
+SELECT firstname,lastname from employees 
+where notes like '%BA%' or notes like '%BS%';
+
+select productid, max(quantity) from orderdetails
+
+insert into customers
+values('111','Ernest','2gs','123projects','detroit','48219','USA')
+
+
+

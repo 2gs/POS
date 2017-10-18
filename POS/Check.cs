@@ -2,34 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace POS
 {
-    class Check:Payment
+    class Check : Payment
     {
         public override void payment(double gt)
         {
-            string checknumber = "";
+            //double Input = 0;
+            string checkNumber;
+
             bool going = true;
-            do
+            Console.WriteLine("Please enter your five digit check number");
+            while (going == true)
             {
-                Console.WriteLine("Enter your check #..");
-                checknumber = Console.ReadLine();
-                if (checknumber.Length < 7)
+
+                // ReadValidInteger();
+                checkNumber = Console.ReadLine();
+
+
+                if (!Regex.IsMatch(checkNumber, "^\\d{5}$"))    //check check pattern for 5
                 {
-                    going = true;
+                    Console.WriteLine("Please enter a valid check number.");
+                    // going = true;
+                    // checkNumber = Console.ReadLine();
                 }
-                else if (checknumber.Length == 7)
+                else
                 {
-                    Console.WriteLine(checknumber + " is a valid Check number");
+                    Console.WriteLine("You have wrote a check:" + checkNumber);
+                    Console.WriteLine("Thank you for your purchase.");
                     going = false;
                 }
-            } while (going);
-            
-            Console.WriteLine("\n");
-            Console.WriteLine("Processing...");
-            Console.WriteLine("You have wrote a check:" + checknumber + " for the amount of " + gt);
-         }
+            }
+        }
     }
 }
